@@ -9,7 +9,9 @@
     <h1>Index</h1>
     <h4>
         {% for item in items %}
-            ID: {{ item.id }} | Name: {{ item.name }} | Price: {{ item.price }} | Description: {{ item.description }} <br/>
+        <a href="/detail/{{ item.id }}/">
+            ID: {{ item.id }} | Name: {{ item.name }} | Price: {{ item.price }} | Description: {{ item.description }} <br />
+        </a>
         {% endfor %}
     </h4>
 </body>
