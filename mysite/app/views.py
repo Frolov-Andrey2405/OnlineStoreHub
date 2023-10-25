@@ -1,11 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from .models import Product
 
 
 def index(request):
     items = Product.objects.all()
-    return HttpResponse(items)
+    contact = {
+        'items': items
+    }
+    return render(request, 'app/index.html', contact)
 
 
 def contact(request):
