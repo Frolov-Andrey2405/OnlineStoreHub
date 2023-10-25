@@ -9,7 +9,18 @@
     <link rel="stylesheet" href="{% static 'app/styles.css' %}">
 </head>
 <body>
-    <h1>Index</h1>
+    <nav>
+        <div>
+            <div>
+                <div>
+                    <div class="flex">
+                        <img class="h-8 w-8" src="{% static 'app/images/shop.png' %}" alt="logo">
+                        <span class="text-xl">Online Store Hub</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
     <h4>
         {% for item in items %}
             <a href="{% url 'app:detail' item.id %}">
