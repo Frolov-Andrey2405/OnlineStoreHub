@@ -1,0 +1,16 @@
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="name">Name:</label>
+    <input type="text" placeholder="Enter your name..." name="name" id="name" required><br>
+
+    <label for="price">Price:</label>
+    <input type="text" placeholder="Enter the price..." name="price" id="price" required><br>
+
+    <label for="description">Description:</label>
+    <input type="text" placeholder="Enter the description..." name="description" id="description" required><br>
+
+    <label for="upload">Upload Image:</label>
+    <input type="file" accept="image/*" name="upload" id="upload" required><br>
+
+    <button type="submit" name="Add Item" value="Add Item">Add Item</button>
+</form>

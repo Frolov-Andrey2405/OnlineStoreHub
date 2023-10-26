@@ -17,3 +17,15 @@ def indexItem(request, my_id):
         'item': item
     }
     return render(request, 'app/detail.html', context=context)
+
+
+def add_item(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        price = request.POST['price']
+        description = request.POST['description']
+        image = request.FILES['upload']
+        item = Product(
+            name=name, price=price, description=description, image=image)
+        item.save()
+    return render(request, 'app/add_item.html')
