@@ -5,6 +5,7 @@
     {% for item in items %}
         <a href="{% url 'app:detail' item.id %}">
             ID: {{item.id}} | Имя: {{item.name}} | Цена: {{item.price}} | {{item.description}} <br />
+            <img src="{{item.image.url}}" alt="images">
         </a>
     {% endfor %}
 </h4>
