@@ -42,3 +42,12 @@ def update_item(request, my_id):
         return redirect("/")
     context = {"item": item}
     return render(request, "app/update_item.html", context)
+
+
+def delete_item(request, my_id):
+    item = Product.objects.get(id=my_id)
+    if request.method == "POST":
+        item.delete()
+        return redirect("/")
+    context = {"item": item}
+    return render(request, "app/delete_item.html", context)
