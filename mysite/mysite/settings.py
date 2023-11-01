@@ -132,3 +132,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEADIA_ROOT = BASE_DIR / 'media'
 MEADIA_URL = '/media/'
+
+LOGIN_REDIRECT_URL = 'app:index'
+# LOGOUT_REDIRECT_URL = 'app:index'
