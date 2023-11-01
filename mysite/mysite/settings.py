@@ -134,4 +134,5 @@ MEADIA_ROOT = BASE_DIR / 'media'
 MEADIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = 'app:index'
+LOGIN_URL = 'users:login'
 # LOGOUT_REDIRECT_URL = 'app:index'
