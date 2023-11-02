@@ -1,7 +1,12 @@
+import json
+
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
+from django.http import HttpResponseNotFound, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse, reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import DeleteView
 
@@ -33,6 +38,12 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = "app/detail.html"
     context_object_name = "item"
+    pk_url_kwarg = "pk"
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        context["stripe_publishable_key"] = settings.STRIPE_PUBLISHABLE_KEY
+        return context
 
 
 @login_required
