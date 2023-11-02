@@ -1,0 +1,22 @@
+version: '3'
+services:
+  # Service for building frontend assets
+  frontend-builder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/code
+    working_dir: /code/mysite
+    command: npm run build
+    depends_on:
+      - web
+
+  # Service for Django application
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+    command: python mysite/manage.py runserver 0.0.0.0:8000
