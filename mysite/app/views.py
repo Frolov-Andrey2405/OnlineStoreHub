@@ -1,5 +1,6 @@
 # from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
 from .models import Product
 
 
@@ -19,14 +20,17 @@ def indexItem(request, my_id):
     return render(request, 'app/detail.html', context=context)
 
 
+@login_required
 def add_item(request):
     if request.method == 'POST':
         name = request.POST['name']
         price = request.POST['price']
         description = request.POST['description']
         image = request.FILES['upload']
+        seller = request.user
         item = Product(
-            name=name, price=price, description=description, image=image)
+            name=name, price=price, description=description,
+            image=image, seller=seller)
         item.save()
     return render(request, 'app/add_item.html')
 
