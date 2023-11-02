@@ -1,23 +1,21 @@
-# from django.http import HttpResponse
-from django.shortcuts import redirect, render
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from .models import Product
+from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 
 
-def index(request):
-    items = Product.objects.all()
-    contact = {
-        'items': items
-    }
-    return render(request, 'app/index.html', contact)
+class ProductListView(ListView):
+    model = Product
+    template_name = "app/index.html"
+    context_object_name = "items"
 
 
-def indexItem(request, my_id):
-    item = Product.objects.get(id=my_id)
-    context = {
-        'item': item
-    }
-    return render(request, 'app/detail.html', context=context)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = "app/detail.html"
+    context_object_name = "item"
 
 
 @login_required
@@ -55,3 +53,8 @@ def delete_item(request, my_id):
         return redirect("/")
     context = {"item": item}
     return render(request, "app/delete_item.html", context)
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy("app:index")
