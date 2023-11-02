@@ -8,8 +8,9 @@ from django.http import HttpResponseNotFound, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import DeleteView
+
 
 from .models import OrderDetail, Product
 
@@ -120,3 +121,24 @@ def create_checkout_session(request, id):
     order.amount = int(product.price)
     order.save()
     return JsonResponse({"sessionId": checkout_session.id})
+
+
+class PaymentSuccessView(TemplateView):
+    template_name = "app/payment_success.html"
+
+    def get(self, request, *args, **kwargs):
+        session_id = request.GET.get("session_id")
+        if session_id is None:
+            return HttpResponseNotFound()
+        session = stripe.checkout.Session.retrieve(session_id)
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        order = get_object_or_404(
+            OrderDetail, stripe_payment_intent=session.payment_intent
+        )
+        order.has_paid = True
+        order.save()
+        return render(request, self.template_name)
+
+
+class PaymentFailedView(TemplateView):
+    template_name = "app/payment_failed.html"
