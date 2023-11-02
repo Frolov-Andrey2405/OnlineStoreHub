@@ -1,15 +1,31 @@
 from django.shortcuts import render, redirect
 from .models import Product
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
+
+
+def index(request):
+    page_obj = items = Product.objects.all()
+
+    item_name = request.GET.get('search')
+    if item_name != '' and item_name is not None:
+        page_obj = items.filter(name__icontains=item_name)
+
+    paginator = Paginator(page_obj, 2)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'page_obj': page_obj}
+    return render(request, "app/index.html", context)
 
 
 class ProductListView(ListView):
     model = Product
     template_name = "app/index.html"
     context_object_name = "items"
+    paginate_by = 2
 
 
 class ProductDetailView(DetailView):
