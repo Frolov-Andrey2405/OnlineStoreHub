@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Profile
+from django.shortcuts import redirect, render
+
 from .forms import NewUserForm
+from .models import Profile
 
 
 def register(request):

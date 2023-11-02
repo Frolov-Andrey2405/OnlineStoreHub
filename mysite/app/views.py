@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
-from .models import Product
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.views.generic import ListView, DetailView
-from django.views.generic.edit import DeleteView
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import DeleteView
+
+from .models import Product
 
 
 def index(request):

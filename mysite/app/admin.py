@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import Product
 
 admin.site.site_header = "My Django App"
