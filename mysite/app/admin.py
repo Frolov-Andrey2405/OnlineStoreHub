@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Product
+from .models import Product, OrderDetail
 
 admin.site.site_header = "My Django App"
 admin.site.site_title = "Title of Django"
@@ -18,3 +18,4 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Product, ProductAdmin)
+admin.site.register(OrderDetail)
